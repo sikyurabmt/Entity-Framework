@@ -1,0 +1,50 @@
+﻿@model G7_ModelFirst.Models.Student
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentAge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentAge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentGrade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentGrade)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentYearOfGraduation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentYearOfGraduation)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StudentID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

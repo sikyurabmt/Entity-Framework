@@ -4,46 +4,174 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DatabaseFirstExampleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Schools">
+      <Schema Namespace="DBFirstModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="RegisterSubjects">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="RegSubID" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="255" />
-          <Property Name="Address" Type="nchar" MaxLength="255" />
+          <Property Name="RegSubID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegStudent_StudentID" Type="int" />
+          <Property Name="RegSubject_SubjectID" Type="int" />
         </EntityType>
-        <EntityContainer Name="DatabaseFirstExampleModelStoreContainer">
-          <EntitySet Name="Schools" EntityType="Self.Schools" Schema="dbo" store:Type="Tables" />
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentName" Type="nvarchar(max)" />
+          <Property Name="StudentAge" Type="int" />
+          <Property Name="StudentGrade" Type="real" />
+          <Property Name="StudentYearOfGraduation" Type="int" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="SubjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubjectName" Type="nvarchar(max)" />
+          <Property Name="SubjectNumOfStudent" Type="int" />
+        </EntityType>
+        <Association Name="FK_RegisterSubjects_Students">
+          <End Role="Students" Type="Self.Students" Multiplicity="0..1" />
+          <End Role="RegisterSubjects" Type="Self.RegisterSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="RegisterSubjects">
+              <PropertyRef Name="RegStudent_StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisterSubjects_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
+          <End Role="RegisterSubjects" Type="Self.RegisterSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="RegisterSubjects">
+              <PropertyRef Name="RegSubject_SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBFirstModelStoreContainer">
+          <EntitySet Name="RegisterSubjects" EntityType="Self.RegisterSubjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_RegisterSubjects_Students" Association="Self.FK_RegisterSubjects_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="RegisterSubjects" EntitySet="RegisterSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisterSubjects_Subjects" Association="Self.FK_RegisterSubjects_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="RegisterSubjects" EntitySet="RegisterSubjects" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DatabaseFirstExampleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Schools">
+      <Schema Namespace="DBFirstModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="RegisterSubject">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="RegSubID" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+          <Property Name="RegSubID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegStudent_StudentID" Type="Int32" />
+          <Property Name="RegSubject_SubjectID" Type="Int32" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_RegisterSubjects_Students" FromRole="RegisterSubjects" ToRole="Students" />
+          <NavigationProperty Name="Subject" Relationship="Self.FK_RegisterSubjects_Subjects" FromRole="RegisterSubjects" ToRole="Subjects" />
         </EntityType>
-        <EntityContainer Name="DatabaseFirstExampleEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Schools" EntityType="Self.Schools" />
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StudentAge" Type="Int32" />
+          <Property Name="StudentGrade" Type="Single" />
+          <Property Name="StudentYearOfGraduation" Type="Int32" />
+          <NavigationProperty Name="RegisterSubjects" Relationship="Self.FK_RegisterSubjects_Students" FromRole="Students" ToRole="RegisterSubjects" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="SubjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SubjectNumOfStudent" Type="Int32" />
+          <NavigationProperty Name="RegisterSubjects" Relationship="Self.FK_RegisterSubjects_Subjects" FromRole="Subjects" ToRole="RegisterSubjects" />
+        </EntityType>
+        <Association Name="FK_RegisterSubjects_Students">
+          <End Role="Students" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="RegisterSubjects" Type="Self.RegisterSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="RegisterSubjects">
+              <PropertyRef Name="RegStudent_StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisterSubjects_Subjects">
+          <End Role="Subjects" Type="Self.Subject" Multiplicity="0..1" />
+          <End Role="RegisterSubjects" Type="Self.RegisterSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="RegisterSubjects">
+              <PropertyRef Name="RegSubject_SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBFirstEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="RegisterSubjects" EntityType="Self.RegisterSubject" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <EntitySet Name="Subjects" EntityType="Self.Subject" />
+          <AssociationSet Name="FK_RegisterSubjects_Students" Association="Self.FK_RegisterSubjects_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="RegisterSubjects" EntitySet="RegisterSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisterSubjects_Subjects" Association="Self.FK_RegisterSubjects_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="RegisterSubjects" EntitySet="RegisterSubjects" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DatabaseFirstExampleModelStoreContainer" CdmEntityContainer="DatabaseFirstExampleEntities">
-          <EntitySetMapping Name="Schools">
-            <EntityTypeMapping TypeName="DatabaseFirstExampleModel.Schools">
-              <MappingFragment StoreEntitySet="Schools">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
+        <EntityContainerMapping StorageEntityContainer="DBFirstModelStoreContainer" CdmEntityContainer="DBFirstEntities">
+          <EntitySetMapping Name="RegisterSubjects">
+            <EntityTypeMapping TypeName="DBFirstModel.RegisterSubject">
+              <MappingFragment StoreEntitySet="RegisterSubjects">
+                <ScalarProperty Name="RegSubID" ColumnName="RegSubID" />
+                <ScalarProperty Name="RegStudent_StudentID" ColumnName="RegStudent_StudentID" />
+                <ScalarProperty Name="RegSubject_SubjectID" ColumnName="RegSubject_SubjectID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="DBFirstModel.Student">
+              <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+                <ScalarProperty Name="StudentAge" ColumnName="StudentAge" />
+                <ScalarProperty Name="StudentGrade" ColumnName="StudentGrade" />
+                <ScalarProperty Name="StudentYearOfGraduation" ColumnName="StudentYearOfGraduation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="DBFirstModel.Subject">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+                <ScalarProperty Name="SubjectNumOfStudent" ColumnName="SubjectNumOfStudent" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -61,7 +189,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

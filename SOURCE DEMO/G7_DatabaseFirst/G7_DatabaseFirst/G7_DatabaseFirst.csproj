@@ -7,7 +7,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{793B84EB-FE3C-4631-9FC2-7D4E90AB8C31}</ProjectGuid>
+    <ProjectGuid>{813CD2D3-2645-49B4-8E8A-EE79959AD440}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -95,16 +95,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\DatabaseFirstEntities.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DatabaseFirstEntities.edmx</DependentUpon>
-      <LastGenOutput>DatabaseFirstEntities.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\DatabaseFirstEntities.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DatabaseFirstEntities.edmx</DependentUpon>
-      <LastGenOutput>DatabaseFirstEntities.cs</LastGenOutput>
-    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -121,10 +111,22 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Subjects\Create.cshtml" />
+    <Content Include="Views\Subjects\Delete.cshtml" />
+    <Content Include="Views\Subjects\Details.cshtml" />
+    <Content Include="Views\Subjects\Edit.cshtml" />
+    <Content Include="Views\Subjects\Index.cshtml" />
+    <Content Include="Views\RegisterSubjects\Create.cshtml" />
+    <Content Include="Views\RegisterSubjects\Delete.cshtml" />
+    <Content Include="Views\RegisterSubjects\Details.cshtml" />
+    <Content Include="Views\RegisterSubjects\Edit.cshtml" />
+    <Content Include="Views\RegisterSubjects\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\SchoolsController.cs" />
+    <Compile Include="Controllers\RegisterSubjectsController.cs" />
+    <Compile Include="Controllers\StudentsController.cs" />
+    <Compile Include="Controllers\SubjectsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -143,7 +145,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DatabaseFirstEntities.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Schools.cs">
+    <Compile Include="Models\RegisterSubject.cs">
+      <DependentUpon>DatabaseFirstEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Student.cs">
+      <DependentUpon>DatabaseFirstEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Subject.cs">
       <DependentUpon>DatabaseFirstEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -155,16 +163,26 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DatabaseFirstEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Models\DatabaseFirstEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DatabaseFirstEntities.edmx</DependentUpon>
+      <LastGenOutput>DatabaseFirstEntities.Context.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\DatabaseFirstEntities.edmx.diagram">
       <DependentUpon>DatabaseFirstEntities.edmx</DependentUpon>
     </Content>
+    <Content Include="Models\DatabaseFirstEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DatabaseFirstEntities.edmx</DependentUpon>
+      <LastGenOutput>DatabaseFirstEntities.cs</LastGenOutput>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Schools\Create.cshtml" />
-    <Content Include="Views\Schools\Delete.cshtml" />
-    <Content Include="Views\Schools\Details.cshtml" />
-    <Content Include="Views\Schools\Edit.cshtml" />
-    <Content Include="Views\Schools\Index.cshtml" />
+    <Content Include="Views\Students\Create.cshtml" />
+    <Content Include="Views\Students\Delete.cshtml" />
+    <Content Include="Views\Students\Details.cshtml" />
+    <Content Include="Views\Students\Edit.cshtml" />
+    <Content Include="Views\Students\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -191,9 +209,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>27960</DevelopmentServerPort>
+          <DevelopmentServerPort>32825</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:27824/</IISUrl>
+          <IISUrl>http://localhost:32825/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

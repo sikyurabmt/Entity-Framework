@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ModelFirstEntities.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ModelFirstEntitiesStoreContainer">
+    <EntitySet Name="Students" EntityType="ModelFirstEntities.Store.Students" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Subjects" EntityType="ModelFirstEntities.Store.Subjects" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RegisterSubjects" EntityType="ModelFirstEntities.Store.RegisterSubjects" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="RegisterSubjectStudent" Association="ModelFirstEntities.Store.RegisterSubjectStudent">
+      <End Role="RegisterSubject" EntitySet="RegisterSubjects" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="RegisterSubjectSubject" Association="ModelFirstEntities.Store.RegisterSubjectSubject">
+      <End Role="RegisterSubject" EntitySet="RegisterSubjects" />
+      <End Role="Subject" EntitySet="Subjects" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Students">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StudentAge" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StudentGrade" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StudentYearOfGraduation" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="RegisterSubject_RegSubID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Subjects">
+    <Key>
+      <PropertyRef Name="SubjectID" />
+    </Key>
+    <Property Name="SubjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubjectName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SubjectNumOfStudent" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="RegisterSubject_RegSubID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RegisterSubjects">
+    <Key>
+      <PropertyRef Name="RegSubID" />
+    </Key>
+    <Property Name="RegSubID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentID" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SubjectID" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="RegisterSubjectStudent">
+    <End Role="RegisterSubject" Type="ModelFirstEntities.Store.RegisterSubjects" Multiplicity="1" />
+    <End Role="Student" Type="ModelFirstEntities.Store.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RegisterSubject">
+        <PropertyRef Name="RegSubID" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="RegisterSubject_RegSubID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RegisterSubjectSubject">
+    <End Role="RegisterSubject" Type="ModelFirstEntities.Store.RegisterSubjects" Multiplicity="1" />
+    <End Role="Subject" Type="ModelFirstEntities.Store.Subjects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RegisterSubject">
+        <PropertyRef Name="RegSubID" />
+      </Principal>
+      <Dependent Role="Subject">
+        <PropertyRef Name="RegisterSubject_RegSubID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ModelFirstEntities" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ModelFirstEntitiesContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Students" EntityType="ModelFirstEntities.Student" />
+          <EntitySet Name="Subjects" EntityType="ModelFirstEntities.Subject" />
+          <EntitySet Name="RegisterSubjects" EntityType="ModelFirstEntities.RegisterSubject" />
+          <AssociationSet Name="RegisterSubjectStudent" Association="ModelFirstEntities.RegisterSubjectStudent">
+            <End Role="RegisterSubject" EntitySet="RegisterSubjects" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="RegisterSubjectSubject" Association="ModelFirstEntities.RegisterSubjectSubject">
+            <End Role="RegisterSubject" EntitySet="RegisterSubjects" />
+            <End Role="Subject" EntitySet="Subjects" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentName" Type="String" Nullable="false" />
+          <Property Name="StudentAge" Type="String" Nullable="false" />
+          <Property Name="StudentGrade" Type="String" Nullable="false" />
+          <Property Name="StudentYearOfGraduation" Type="String" Nullable="false" />
+          <NavigationProperty Name="RegisterSubject" Relationship="ModelFirstEntities.RegisterSubjectStudent" FromRole="Student" ToRole="RegisterSubject" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="SubjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectName" Type="String" Nullable="false" />
+          <Property Name="SubjectNumOfStudent" Type="String" Nullable="false" />
+          <NavigationProperty Name="RegisterSubject" Relationship="ModelFirstEntities.RegisterSubjectSubject" FromRole="Subject" ToRole="RegisterSubject" />
+        </EntityType>
+        <EntityType Name="RegisterSubject">
+          <Key>
+            <PropertyRef Name="RegSubID" />
+          </Key>
+          <Property Name="RegSubID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentID" Type="String" Nullable="false" />
+          <Property Name="SubjectID" Type="String" Nullable="false" />
+          <NavigationProperty Name="Students" Relationship="ModelFirstEntities.RegisterSubjectStudent" FromRole="RegisterSubject" ToRole="Student" />
+          <NavigationProperty Name="Subjects" Relationship="ModelFirstEntities.RegisterSubjectSubject" FromRole="RegisterSubject" ToRole="Subject" />
+        </EntityType>
+        <Association Name="RegisterSubjectStudent">
+          <End Type="ModelFirstEntities.RegisterSubject" Role="RegisterSubject" Multiplicity="1" />
+          <End Type="ModelFirstEntities.Student" Role="Student" Multiplicity="*" />
+        </Association>
+        <Association Name="RegisterSubjectSubject">
+          <End Type="ModelFirstEntities.RegisterSubject" Role="RegisterSubject" Multiplicity="1" />
+          <End Type="ModelFirstEntities.Subject" Role="Subject" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelFirstEntitiesStoreContainer" CdmEntityContainer="ModelFirstEntitiesContainer">
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="IsTypeOf(ModelFirstEntities.Student)">
+        <MappingFragment StoreEntitySet="Students">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+          <ScalarProperty Name="StudentAge" ColumnName="StudentAge" />
+          <ScalarProperty Name="StudentGrade" ColumnName="StudentGrade" />
+          <ScalarProperty Name="StudentYearOfGraduation" ColumnName="StudentYearOfGraduation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Subjects">
+      <EntityTypeMapping TypeName="IsTypeOf(ModelFirstEntities.Subject)">
+        <MappingFragment StoreEntitySet="Subjects">
+          <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+          <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+          <ScalarProperty Name="SubjectNumOfStudent" ColumnName="SubjectNumOfStudent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RegisterSubjects">
+      <EntityTypeMapping TypeName="IsTypeOf(ModelFirstEntities.RegisterSubject)">
+        <MappingFragment StoreEntitySet="RegisterSubjects">
+          <ScalarProperty Name="RegSubID" ColumnName="RegSubID" />
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="RegisterSubjectStudent" TypeName="ModelFirstEntities.RegisterSubjectStudent" StoreEntitySet="Students">
+      <EndProperty Name="RegisterSubject">
+        <ScalarProperty Name="RegSubID" ColumnName="RegisterSubject_RegSubID" />
+      </EndProperty>
+      <EndProperty Name="Student">
+        <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RegisterSubjectSubject" TypeName="ModelFirstEntities.RegisterSubjectSubject" StoreEntitySet="Subjects">
+      <EndProperty Name="RegisterSubject">
+        <ScalarProperty Name="RegSubID" ColumnName="RegisterSubject_RegSubID" />
+      </EndProperty>
+      <EndProperty Name="Subject">
+        <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

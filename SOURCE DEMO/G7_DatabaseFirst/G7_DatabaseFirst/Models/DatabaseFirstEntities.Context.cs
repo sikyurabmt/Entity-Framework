@@ -13,10 +13,10 @@ namespace G7_DatabaseFirst.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DatabaseFirstExampleEntities : DbContext
+    public partial class DBFirstEntities : DbContext
     {
-        public DatabaseFirstExampleEntities()
-            : base("name=DatabaseFirstExampleEntities")
+        public DBFirstEntities()
+            : base("name=DBFirstEntities")
         {
         }
     
@@ -25,6 +25,8 @@ namespace G7_DatabaseFirst.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Schools> Schools { get; set; }
+        public virtual DbSet<RegisterSubject> RegisterSubjects { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<Subject> Subjects { get; set; }
     }
 }
